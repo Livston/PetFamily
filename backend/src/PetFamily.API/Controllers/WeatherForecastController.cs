@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using PetFamily.Domain.Shared;
+using PetFamily.Domain.Volunteer;
 
 namespace PetFamily.API.Controllers
 {
@@ -6,28 +8,42 @@ namespace PetFamily.API.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
-        }
-
         [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        public IActionResult Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            //test
+
+            string name = "Bony";
+            string description = "Bony is not agressive";
+
+            var PetResult = Pet.Create(Guid.NewGuid(), name, description);
+
+            if (PetResult.IsFailure)
             {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+                return ValidationProblem(PetResult.Error);
+            }
+
+            Pet pet = PetResult.Value;
+
+            //
+            var result = TelephoneNumber.Create("");
+            if (result.IsFailure)
+            {
+                Console.WriteLine(result.Error);
+
+            }
+
+            var result2 = Volunteer.Create(Guid.NewGuid(), "Edgard", "Zap");
+
+            string fio = result2.Value.FIO;
+
+            Volunteer volunteer = result2.Value;
+            volunteer.AddPet(pet);
+
+            int petsNeedHelp = volunteer.PetsNeedHelpCount;
+
+            return Ok();
+
         }
     }
 }
