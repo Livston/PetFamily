@@ -38,10 +38,10 @@ namespace PetFamily.Domain.Volunteer
         public SocialNetworksDetails? socialNetworksDetails { get; private set; }
         public HelpDetails? HelpDetails { get; set; }
         public IReadOnlyList<Pet> Pets => _pets;
-        
+
         public static Result<Volunteer, string> Create(Guid id, string name, string lastName)
         {
-            if (id == Guid.Empty) 
+            if (id == Guid.Empty)
             {
                 return "invalid id";
             }
@@ -50,7 +50,7 @@ namespace PetFamily.Domain.Volunteer
             {
                 return "invalid name";
             }
-            
+
             if (string.IsNullOrWhiteSpace(lastName) || lastName.Length > MAX_NAMES_LENGH)
             {
                 return "invalid lastName";
@@ -74,7 +74,7 @@ namespace PetFamily.Domain.Volunteer
             {
                 return "invalid lastName";
             }
-            
+
             if (string.IsNullOrWhiteSpace(secondName) || secondName.Length > MAX_NAMES_LENGH)
             {
                 return "invalid secondName";
@@ -91,7 +91,7 @@ namespace PetFamily.Domain.Volunteer
                 return "Pet has home";
             }
             _pets.Add(pet);
-            
+
             return pet;
         }
     }

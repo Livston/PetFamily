@@ -17,7 +17,7 @@ namespace PetFamily.Domain.Volunteer
         public string Home { get; }
         public string Index { get; }
 
-        public static Result<Adress, string>Create(string city, string street, string home, string index)
+        public static Result<Adress, string> Create(string city, string street, string home, string index)
         {
             //validation
             return new Adress(city, street, home, index);
