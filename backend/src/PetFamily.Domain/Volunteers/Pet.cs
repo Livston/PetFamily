@@ -8,8 +8,8 @@ namespace PetFamily.Domain.Volunteer
 {
     public class Pet : Entity<Guid>
     {
-        const int MAX_NAME_LENGH = 100;
-        const int MAX_DESCRIPTION_LENGH = 2000;
+        public const int MAX_COLOR_LENGH = 200;
+
         private Pet(Guid id, string name, string description) : base(id)
         {
             Name = name;
@@ -23,7 +23,7 @@ namespace PetFamily.Domain.Volunteer
         public double Weigth { get; private set; }
         public double Height { get; private set; }
         public TelephoneNumber? OwnerTelephonNumber { get; private set; }
-        public Adress? Adress { get; private set; }
+        public Address? Adress { get; private set; }
         public bool Neutered { get; private set; }
         public bool Vaccinated { get; private set; }
         public DateOnly DateOfBirth { get; private set; }
@@ -39,12 +39,12 @@ namespace PetFamily.Domain.Volunteer
                 return "Guid is invalid";
             }
 
-            if (string.IsNullOrWhiteSpace(name) || name.Length > MAX_NAME_LENGH) 
+            if (string.IsNullOrWhiteSpace(name) || name.Length > Constans.MAX_NAMES_LENGH) 
             {
                 return "Name is invalid";
             }
 
-            if (string.IsNullOrWhiteSpace(description) || description.Length > MAX_DESCRIPTION_LENGH)
+            if (string.IsNullOrWhiteSpace(description) || description.Length > Constans.MAX_DESCRIPTIONS_LENGH)
             {
                 return "Description is invalid";
             }
