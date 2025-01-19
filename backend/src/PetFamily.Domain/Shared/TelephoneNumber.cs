@@ -5,6 +5,7 @@ namespace PetFamily.Domain.Shared
 {
     public record TelephoneNumber
     {
+        public const int MAX_LENGH = 100;
         private TelephoneNumber(string number)
         {
             Number = number;
@@ -26,5 +27,7 @@ namespace PetFamily.Domain.Shared
             //Russia
             return Regex.Match(number, @"^(\+[0-9]{9})$").Success;
         }
+
+        public static TelephoneNumber FromString(string number) => new TelephoneNumber(number);
     }
 }

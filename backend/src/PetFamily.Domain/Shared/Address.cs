@@ -2,9 +2,10 @@
 
 namespace PetFamily.Domain.Volunteer
 {
-    public record Adress
+    public record Address
     {
-        private Adress(string city, string street, string home, string index)
+
+        private Address(string city, string street, string home, string index)
         {
             City = city;
             Street = street;
@@ -17,10 +18,10 @@ namespace PetFamily.Domain.Volunteer
         public string Home { get; }
         public string Index { get; }
 
-        public static Result<Adress, string> Create(string city, string street, string home, string index)
+        public static Result<Address, string> Create(string city, string street, string home, string index)
         {
             //validation
-            return new Adress(city, street, home, index);
+            return new Address(city, street, home, index);
         }
     }
 }
