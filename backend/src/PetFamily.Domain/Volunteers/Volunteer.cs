@@ -8,8 +8,6 @@ namespace PetFamily.Domain.Volunteer
 {
     public class Volunteer : Entity<Guid>
     {
-        const int MAX_NAMES_LENGH = 100;
-
         private readonly List<Pet> _pets = [];
 
         private Volunteer(Guid id, string name, string lastName, string secondName) : base(id)
@@ -46,12 +44,12 @@ namespace PetFamily.Domain.Volunteer
                 return "invalid id";
             }
 
-            if (string.IsNullOrWhiteSpace(name) || name.Length > MAX_NAMES_LENGH)
+            if (string.IsNullOrWhiteSpace(name) || name.Length > Constans.MAX_NAMES_LENGH)
             {
                 return "invalid name";
             }
 
-            if (string.IsNullOrWhiteSpace(lastName) || lastName.Length > MAX_NAMES_LENGH)
+            if (string.IsNullOrWhiteSpace(lastName) || lastName.Length > Constans.MAX_NAMES_LENGH)
             {
                 return "invalid lastName";
             }
@@ -65,17 +63,17 @@ namespace PetFamily.Domain.Volunteer
                 return "invalid id";
             }
 
-            if (string.IsNullOrWhiteSpace(name) || name.Length > MAX_NAMES_LENGH)
+            if (string.IsNullOrWhiteSpace(name) || name.Length > Constans.MAX_NAMES_LENGH)
             {
                 return "invalid name";
             }
 
-            if (string.IsNullOrWhiteSpace(lastName) || lastName.Length > MAX_NAMES_LENGH)
+            if (string.IsNullOrWhiteSpace(lastName) || lastName.Length > Constans.MAX_NAMES_LENGH)
             {
                 return "invalid lastName";
             }
 
-            if (string.IsNullOrWhiteSpace(secondName) || secondName.Length > MAX_NAMES_LENGH)
+            if (string.IsNullOrWhiteSpace(secondName) || secondName.Length > Constans.MAX_NAMES_LENGH)
             {
                 return "invalid secondName";
             }
