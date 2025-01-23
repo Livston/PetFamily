@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using PetFamily.Domain.Shared;
 using PetFamily.Domain.Volunteer;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace PetFamily.Domain.Volunteers
         public string Name { get; }
         public string Description { get; }
 
-        public static Result<HelpRequisite, string> Create(string name, string description)
+        public static Result<HelpRequisite, Error> Create(string name, string description)
         {
             //validation
             return new HelpRequisite(name, description);

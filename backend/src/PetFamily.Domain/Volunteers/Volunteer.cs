@@ -37,60 +37,61 @@ namespace PetFamily.Domain.Volunteer
         public HelpDetails? HelpDetails { get; set; }
         public IReadOnlyList<Pet> Pets => _pets;
 
-        public static Result<Volunteer, string> Create(Guid id, string name, string lastName)
+        public static Result<Volunteer, Error> Create(Guid id, string name, string lastName)
         {
             if (id == Guid.Empty)
             {
-                return "invalid id";
+                return Errors.General.ValueIsRequired("id");
             }
 
             if (string.IsNullOrWhiteSpace(name) || name.Length > Constans.MAX_NAMES_LENGH)
             {
-                return "invalid name";
+                return Errors.General.ValueIsInvalid("name");
             }
 
             if (string.IsNullOrWhiteSpace(lastName) || lastName.Length > Constans.MAX_NAMES_LENGH)
             {
-                return "invalid lastName";
+                return Errors.General.ValueIsInvalid("lastName");
             }
 
             return new Volunteer(id, name, lastName);
         }
-        public static Result<Volunteer, string> Create(Guid id, string name, string lastName, string secondName)
+        public static Result<Volunteer, Error> Create(Guid id, string name, string lastName, string secondName)
         {
             if (id == Guid.Empty)
             {
-                return "invalid id";
+                return Errors.General.ValueIsRequired("id");
             }
 
             if (string.IsNullOrWhiteSpace(name) || name.Length > Constans.MAX_NAMES_LENGH)
             {
-                return "invalid name";
+                return Errors.General.ValueIsInvalid("name");
             }
 
             if (string.IsNullOrWhiteSpace(lastName) || lastName.Length > Constans.MAX_NAMES_LENGH)
             {
-                return "invalid lastName";
+                return Errors.General.ValueIsInvalid("lastName");
             }
 
             if (string.IsNullOrWhiteSpace(secondName) || secondName.Length > Constans.MAX_NAMES_LENGH)
             {
-                return "invalid secondName";
+                return Errors.General.ValueIsInvalid("secondName");
             }
 
             return new Volunteer(id, name, lastName, secondName);
 
         }
 
-        public Result<Pet, string> AddPet(Pet pet)
+        public Result<IReadOnlyList<Pet>, Error> AddPets(IEnumerable<Pet> pets)
         {
-            if (pet.HelpStatus == PetsHelpStatus.FindedHome)
+            if (pets.Any(p => p.HelpStatus == PetsHelpStatus.FindedHome)) 
             {
-                return "Pet has home";
-            }
-            _pets.Add(pet);
+                return Errors.General.ValueIsInvalid();
+            };
+            
+            _pets.AddRange(pets);
 
-            return pet;
+            return _pets;
         }
     }
 }
