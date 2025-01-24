@@ -8,6 +8,15 @@ namespace PetFamily.Domain.Volunteers
 {
     public record HelpDetails
     {
-        public List<HelpRequisite> HelpRequisites { get; } = [];
+        public HelpDetails()
+        {
+        }
+
+        public HelpDetails(IEnumerable<HelpRequisite> helpRequisites)
+        {
+            HelpRequisites = helpRequisites.ToList();
+        }
+
+        public IReadOnlyList<HelpRequisite> HelpRequisites { get; } = [];
     }
 }

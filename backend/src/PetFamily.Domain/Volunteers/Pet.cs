@@ -2,7 +2,6 @@
 using PetFamily.Domain.Enums;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Volunteers;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PetFamily.Domain.Volunteer
 {
@@ -32,21 +31,21 @@ namespace PetFamily.Domain.Volunteer
         public HelpDetails? HelpDetails { get; private set; }
         public SpeciesBreed? SpeciesBreed { get; private set; }
 
-        public static Result<Pet, string> Create(Guid id, string name, string description)
+        public static Result<Pet, Error> Create(Guid id, string name, string description)
         {
             if (id == Guid.Empty)
             {
-                return "Guid is invalid";
+                return Errors.General.ValueIsRequired("id");
             }
 
-            if (string.IsNullOrWhiteSpace(name) || name.Length > Constans.MAX_NAMES_LENGH) 
+            if (string.IsNullOrWhiteSpace(name) || name.Length > Constans.MAX_NAMES_LENGH)
             {
-                return "Name is invalid";
+                return Errors.General.ValueIsInvalid("name");
             }
 
             if (string.IsNullOrWhiteSpace(description) || description.Length > Constans.MAX_DESCRIPTIONS_LENGH)
             {
-                return "Description is invalid";
+                return Errors.General.ValueIsInvalid("description");
             }
 
             return new Pet(id, name, description);
