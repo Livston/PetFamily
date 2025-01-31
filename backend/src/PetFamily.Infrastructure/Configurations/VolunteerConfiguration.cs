@@ -36,7 +36,8 @@ namespace PetFamily.Infrastructure.Configurations
 
             builder.HasMany(v => v.Pets)
                 .WithOne()
-                .HasForeignKey("volunteer_id");
+                .HasForeignKey("volunteer_id")
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Property(v => v.ExperienceInYears);
 
@@ -47,7 +48,7 @@ namespace PetFamily.Infrastructure.Configurations
                     number => TelephoneNumber.FromString(number))
                 .HasMaxLength(TelephoneNumber.MAX_LENGH);
 
-            builder.OwnsOne(v => v.socialNetworksDetails, vb =>
+            builder.OwnsOne(v => v.SocialNetworksDetails, vb =>
             {
                 vb.ToJson();
                 vb.OwnsMany(sn => sn.SocialNetworks, snb =>

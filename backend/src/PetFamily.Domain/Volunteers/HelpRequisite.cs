@@ -22,7 +22,16 @@ namespace PetFamily.Domain.Volunteers
 
         public static Result<HelpRequisite, Error> Create(string name, string description)
         {
-            //validation
+            if (string.IsNullOrWhiteSpace(name) || name.Length > Constans.MAX_NAMES_LENGH)
+            {
+                return Errors.General.ValueIsInvalid("name");
+            }
+
+            if (string.IsNullOrWhiteSpace(description) || description.Length > Constans.MAX_DESCRIPTIONS_LENGH)
+            {
+                return Errors.General.ValueIsInvalid("description");
+            }
+
             return new HelpRequisite(name, description);
         }
     }

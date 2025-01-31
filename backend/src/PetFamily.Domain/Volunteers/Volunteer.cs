@@ -33,7 +33,7 @@ namespace PetFamily.Domain.Volunteer
         public int PetsFindedHomeCount => _pets.Where(p => p.HelpStatus == PetsHelpStatus.FindedHome).Count();
         public int PetsNeedHomeCount => _pets.Where(p => p.HelpStatus == PetsHelpStatus.NeedHome).Count();
         public int PetsNeedHelpCount => _pets.Where(p => p.HelpStatus == PetsHelpStatus.NeedHelp).Count();
-        public SocialNetworksDetails? socialNetworksDetails { get; private set; }
+        public SocialNetworksDetails? SocialNetworksDetails { get; private set; }
         public HelpDetails? HelpDetails { get; set; }
         public IReadOnlyList<Pet> Pets => _pets;
 
