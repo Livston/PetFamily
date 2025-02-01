@@ -4,6 +4,7 @@ using PetFamily.Domain.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,5 +27,13 @@ namespace PetFamily.Application.Validation
 
             });
         }
+
+        public static IRuleBuilderOptions<T, TProperty> WithError<T, TProperty>(
+        this IRuleBuilderOptions<T, TProperty> rule, Error error)
+        {
+            return rule.WithMessage(error.Serialize());
+        }
+
     }
+    
 }

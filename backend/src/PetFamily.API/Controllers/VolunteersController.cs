@@ -30,6 +30,7 @@ namespace PetFamily.API.Controllers
             [FromBody] CreateVolunteerRequest request,
             CancellationToken cancellationToken = default)
         {
+
             var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
             if (validationResult.IsValid == false)

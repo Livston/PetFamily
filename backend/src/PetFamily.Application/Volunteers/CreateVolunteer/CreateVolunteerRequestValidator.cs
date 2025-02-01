@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using PetFamily.Application.Validation;
+using PetFamily.Domain.Shared;
 using PetFamily.Domain.Volunteer;
 using PetFamily.Domain.Volunteers;
 using System;
@@ -15,7 +16,8 @@ namespace PetFamily.Application.Volunteers.CreateVolunteer
     {
         public CreateVolunteerRequestValidator() 
         {
-            //RuleFor(c => c.Name).NotEmpty();
+            //оставил для примера валидации обычных полей
+            //RuleFor(c => c.Age).GreaterThan(0).WithError(Errors.General.ValueIsInvalid("Age"));
             
             RuleFor(c => new { c.Name, c.LastName })
                 .CreateMethod(x => Volunteer.Create(Guid.NewGuid(), x.Name, x.LastName));
