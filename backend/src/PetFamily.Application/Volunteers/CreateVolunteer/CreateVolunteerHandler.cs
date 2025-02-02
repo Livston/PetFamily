@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using FluentValidation;
+using Microsoft.Extensions.Logging;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Volunteer;
 using PetFamily.Domain.Volunteers;
@@ -14,12 +15,14 @@ namespace PetFamily.Application.Volunteers.CreateVolunteer
     public class CreateVolunteerHandler
     {
         private readonly IVolunteersRepository _volunteersRepository;
+        private readonly ILogger<CreateVolunteerHandler> _logger;
 
         public CreateVolunteerHandler(
-            IVolunteersRepository volunteersRepository)
+            IVolunteersRepository volunteersRepository,
+            ILogger<CreateVolunteerHandler> logger)
         {
             _volunteersRepository = volunteersRepository;
-
+            _logger = logger;
         }
 
         public async Task<Result<Guid, Error>> HandleAsync(
@@ -43,6 +46,8 @@ namespace PetFamily.Application.Volunteers.CreateVolunteer
             {
                 return addResult.Error;
             }
+
+            _logger.LogInformation("Created volunteer {name} - {lastName} with {id}", volunteer.Name, volunteer.LastName, volunteer.Id);
 
             return addResult.Value;
         }
