@@ -9,6 +9,7 @@ namespace PetFamily.Domain.Volunteer
     public class Volunteer : Entity<Guid>
     {
         private readonly List<Pet> _pets = [];
+        public const int MAX_ExperienceInYears = 100;
 
         private Volunteer(Guid id, string name, string lastName, string secondName) : base(id)
         {
@@ -84,14 +85,29 @@ namespace PetFamily.Domain.Volunteer
 
         public Result<IReadOnlyList<Pet>, Error> AddPets(IEnumerable<Pet> pets)
         {
-            if (pets.Any(p => p.HelpStatus == PetsHelpStatus.FindedHome)) 
+            if (pets.Any(p => p.HelpStatus == PetsHelpStatus.FindedHome))
             {
                 return Errors.General.ValueIsInvalid();
             };
-            
+
             _pets.AddRange(pets);
 
             return _pets;
         }
+
+        public Result<Volunteer, Error> UpdateMainInfo(
+            string name,
+            string lastName,
+            TelephoneNumber telephoneNumber,
+            int experienceInYears)
+        {
+            Name = name;
+            LastName = lastName;
+            TelephoneNumber = telephoneNumber;
+            ExperienceInYears = experienceInYears;
+
+            return this;
+        }
+
     }
 }
