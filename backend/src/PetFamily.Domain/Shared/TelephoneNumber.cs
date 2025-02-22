@@ -12,11 +12,11 @@ namespace PetFamily.Domain.Shared
         }
         public string Number { get; }
 
-        public static Result<TelephoneNumber, string> Create(string number)
+        public static Result<TelephoneNumber, Error> Create(string number)
         {
             if (!IsPhoneNumber(number))
             {
-                return "Telephone number is invalid";
+                return Errors.General.ValueIsInvalid("Telephone number");
             }
 
             return new TelephoneNumber(number);

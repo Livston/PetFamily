@@ -43,5 +43,11 @@ namespace PetFamily.Infrastructure.Repositories
             return volunteer.Id;
         }
 
+        public async Task<Result<Guid, Error>> SaveAsync(Volunteer volunteer, CancellationToken cancellationToken = default)
+        {
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            
+            return volunteer.Id;
+        }
     }
 }

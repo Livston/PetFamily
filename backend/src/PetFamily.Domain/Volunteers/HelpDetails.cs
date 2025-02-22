@@ -17,6 +17,7 @@ namespace PetFamily.Domain.Volunteers
             HelpRequisites = helpRequisites.ToList();
         }
 
-        public IReadOnlyList<HelpRequisite> HelpRequisites { get; } = [];
+        //public IReadOnlyList<HelpRequisite> HelpRequisites { get; } = [];
+        public IReadOnlyList<HelpRequisite> HelpRequisites { get; }
     }
 }
