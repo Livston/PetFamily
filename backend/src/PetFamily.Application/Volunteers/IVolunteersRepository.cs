@@ -8,6 +8,8 @@ namespace PetFamily.Application.Volunteers
     {
         Task<Result<Guid, Error>> AddAsync(Volunteer volunteer, CancellationToken cancellationToken = default);
         Task<Result<Guid, Error>> SaveAsync(Volunteer volunteer, CancellationToken cancellationToken = default);
+        Task<Result<Guid, Error>> DeleteAsync(Volunteer volunteer, CancellationToken cancellationToken = default);
         Task<Result<Volunteer, Error>> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+
     }
 }

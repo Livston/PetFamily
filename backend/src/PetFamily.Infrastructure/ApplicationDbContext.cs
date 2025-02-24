@@ -29,6 +29,7 @@ namespace PetFamily.Infrastructure
             optionsBuilder.UseNpgsql(_configuration.GetConnectionString(DATABASE));
             optionsBuilder.UseSnakeCaseNamingConvention();
             optionsBuilder.UseLoggerFactory(CreateLogerFactory());
+            optionsBuilder.EnableSensitiveDataLogging();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

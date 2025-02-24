@@ -80,6 +80,10 @@ namespace PetFamily.Infrastructure.Configurations
                 });
             });
 
+            builder.Property<bool>("isDeleted")
+                .UsePropertyAccessMode(PropertyAccessMode.Field)
+                .HasColumnName("is_deleted");
+
         }
     }
 }

@@ -47,7 +47,7 @@ namespace PetFamily.Application.Volunteers.UpdateMainInfo
 
             var updateResult = await _volunteersRepository.SaveAsync(volunteer, cancellationToken);
             
-            _logger.LogInformation("updat main info volunteer {name} - {lastName} with {id}", volunteer.Name, volunteer.LastName, volunteer.Id);
+            _logger.LogInformation("updat main info volunteer {name} - {lastName} with id: {id}", volunteer.Name, volunteer.LastName, volunteer.Id);
 
             return updateResult.Value;
         }

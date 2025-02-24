@@ -8,6 +8,7 @@ namespace PetFamily.Domain.Volunteer
     public class Pet : Entity<Guid>
     {
         public const int MAX_COLOR_LENGH = 200;
+        private bool isDeleted = false;
 
         private Pet(Guid id, string name, string description) : base(id)
         {
@@ -49,6 +50,20 @@ namespace PetFamily.Domain.Volunteer
             }
 
             return new Pet(id, name, description);
+        }
+
+        public Result<Pet, Error> Delete()
+        {
+            isDeleted = true;
+
+            return this;
+        }
+
+        public Result<Pet, Error> Restore()
+        {
+            isDeleted = false;
+
+            return this;
         }
 
     }

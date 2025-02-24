@@ -10,6 +10,7 @@ namespace PetFamily.Domain.Volunteer
     {
         private readonly List<Pet> _pets = [];
         public const int MAX_ExperienceInYears = 100;
+        private bool isDeleted = false;
 
         private Volunteer(Guid id, string name, string lastName, string secondName) : base(id)
         {
@@ -105,6 +106,22 @@ namespace PetFamily.Domain.Volunteer
             LastName = lastName;
             TelephoneNumber = telephoneNumber;
             ExperienceInYears = experienceInYears;
+
+            return this;
+        }
+
+        public Result<Volunteer, Error> Delete()
+        {
+            isDeleted = true;
+            _pets.ForEach(P => P.Delete());
+
+            return this;
+        }
+
+        public Result<Volunteer, Error> Restore()
+        {
+            isDeleted = false;
+            _pets.ForEach(P => P.Restore());
 
             return this;
         }

@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using PetFamily.API.Extentions;
 using PetFamily.API.Response;
 using PetFamily.Application.Volunteers.CreateVolunteer;
+using PetFamily.Application.Volunteers.Delete;
 using PetFamily.Application.Volunteers.Dto;
+using PetFamily.Application.Volunteers.MarkDeleted;
 using PetFamily.Application.Volunteers.UpdateHelpDetails;
 using PetFamily.Application.Volunteers.UpdateMainInfo;
 using PetFamily.Domain.Shared;
@@ -96,6 +98,57 @@ namespace PetFamily.API.Controllers
             }
 
             var result = await handler.HandleAsync(request, cancellationToken);
+            if (result.IsFailure)
+            {
+                return result.Error.ToResponse();
+            }
+
+            return Ok(result.Value);
+        }
+
+
+        [HttpDelete("{id:guid}")]
+        public async Task<ActionResult> Delete(
+            [FromRoute] Guid id,
+            [FromServices] DeleteVolunteerHandler Handler,
+            [FromServices] IValidator<DeleteVolunteerRequest> validator,
+            CancellationToken cancellationToken = default)
+        {
+            var request = new DeleteVolunteerRequest(id);
+
+            var validationResult = await validator.ValidateAsync(request, cancellationToken);
+            if (validationResult.IsValid == false)
+            {
+                return validationResult.ToValidationErrorResponse();
+            }
+
+            var result = await Handler.HandleAsync(request, cancellationToken);
+            if (result.IsFailure)
+            {
+                return result.Error.ToResponse();
+            }
+
+            return Ok(result.Value);
+
+        }
+
+        [HttpPut("{id:guid}/mark-deleted")]
+        public async Task<ActionResult> MarkDeleted(
+            [FromRoute] Guid id,
+            [FromServices] MarkDeletedVolunteerHandler Handler,
+            [FromServices] IValidator<MarkDeletedVolunteerRequest> validator,
+            [FromQuery] bool isDeleted = true,
+            CancellationToken cancellationToken = default)
+        {
+            var request = new MarkDeletedVolunteerRequest(id, isDeleted);
+
+            var validationResult = await validator.ValidateAsync(request, cancellationToken);
+            if (validationResult.IsValid == false)
+            {
+                return validationResult.ToValidationErrorResponse();
+            }
+
+            var result = await Handler.HandleAsync(request, cancellationToken);
             if (result.IsFailure)
             {
                 return result.Error.ToResponse();

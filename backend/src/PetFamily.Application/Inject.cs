@@ -9,6 +9,8 @@ using PetFamily.Application.Volunteers.CreateVolunteer;
 using FluentValidation;
 using PetFamily.Application.Volunteers.UpdateMainInfo;
 using PetFamily.Application.Volunteers.UpdateHelpDetails;
+using PetFamily.Application.Volunteers.Delete;
+using PetFamily.Application.Volunteers.MarkDeleted;
 
 namespace PetFamily.Application
 {
@@ -19,6 +21,8 @@ namespace PetFamily.Application
             services.AddScoped<CreateVolunteerHandler>();
             services.AddScoped<UpdateMainInfoHandler>();
             services.AddScoped<UpdateHelpDetailsHandler>();
+            services.AddScoped<MarkDeletedVolunteerHandler>();
+            services.AddScoped<DeleteVolunteerHandler>();
 
             services.AddValidatorsFromAssembly(typeof(Inject).Assembly);
 
