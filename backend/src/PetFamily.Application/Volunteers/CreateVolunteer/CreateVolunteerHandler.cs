@@ -47,7 +47,7 @@ namespace PetFamily.Application.Volunteers.CreateVolunteer
                 return addResult.Error;
             }
 
-            _logger.LogInformation("Created volunteer {name} - {lastName} with {id}", volunteer.Name, volunteer.LastName, volunteer.Id);
+            _logger.LogInformation("Created volunteer {name} - {lastName} with id: {id}", volunteer.Name, volunteer.LastName, volunteer.Id);
 
             return addResult.Value;
         }
