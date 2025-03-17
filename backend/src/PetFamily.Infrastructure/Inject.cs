@@ -1,5 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Minio;
+using PetFamily.Application.Providers;
 using PetFamily.Application.Volunteers;
+using PetFamily.Infrastructure.Options;
+using PetFamily.Infrastructure.Providers;
 using PetFamily.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
@@ -7,17 +12,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetFamily.Infrastructure
+namespace PetFamily.Infrastructure;
+
+public static class Inject
 {
-    public static class Inject
+    public static IServiceCollection AddInfrastructure(
+        this IServiceCollection services, IConfiguration configuration)
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services) 
+        services.AddScoped<ApplicationDbContext>();
+
+        services.AddScoped<IVolunteersRepository, VolunteersRepository>();
+
+        services.AddMinio(configuration);
+
+        return services;
+    }
+
+    private static IServiceCollection AddMinio(
+        this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        services.AddMinio(options =>
         {
-            services.AddScoped<ApplicationDbContext>();
+            services.Configure<MinioOptions>(configuration.GetSection(MinioOptions.MINIO));
 
-            services.AddScoped<IVolunteersRepository, VolunteersRepository>();
+            var minioOptions = configuration.GetSection(MinioOptions.MINIO).Get<MinioOptions>()
+                ?? throw new ApplicationException("minio settings");
 
-            return services;
-        }
+            options.WithEndpoint(minioOptions.Endpoint);
+            options.WithCredentials(minioOptions.AccessKey, minioOptions.SecretKey);
+            options.WithSSL(minioOptions.WithSSL);
+        });
+
+        services.AddScoped<IFileProvider, MinioProvider>();
+
+        return services;
     }
 }

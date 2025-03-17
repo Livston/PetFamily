@@ -11,6 +11,10 @@ using PetFamily.Application.Volunteers.UpdateMainInfo;
 using PetFamily.Application.Volunteers.UpdateHelpDetails;
 using PetFamily.Application.Volunteers.Delete;
 using PetFamily.Application.Volunteers.MarkDeleted;
+using PetFamily.Application.Providers;
+using PetFamily.Application.Files.Upload;
+using PetFamily.Application.Files.DeleteFile;
+using PetFamily.Application.Files.GetFile;
 
 namespace PetFamily.Application
 {
@@ -23,6 +27,10 @@ namespace PetFamily.Application
             services.AddScoped<UpdateHelpDetailsHandler>();
             services.AddScoped<MarkDeletedVolunteerHandler>();
             services.AddScoped<DeleteVolunteerHandler>();
+            
+            services.AddScoped<UploadFileHandler>();
+            services.AddScoped<DeleteFileHandler>();
+            services.AddScoped<GetFileHandler>();
 
             services.AddValidatorsFromAssembly(typeof(Inject).Assembly);
 
