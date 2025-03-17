@@ -58,6 +58,7 @@ namespace PetFamily.Domain.Volunteer
 
             return new Volunteer(id, name, lastName);
         }
+
         public static Result<Volunteer, Error> Create(Guid id, string name, string lastName, string secondName)
         {
             if (id == Guid.Empty)
